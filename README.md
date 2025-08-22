@@ -1,6 +1,3 @@
-
-# Enrollify
-
 # <p align="center">Enrollify - Sistema de Matrículas Universitário</p>
 
 <p align="center">
@@ -115,7 +112,7 @@ O Enrollify, Sistema de Matrículas Universitárias é uma aplicação web desen
  quero consultar as turmas que me foram atribuídas no semestre,
  para acompanhar em quais disciplinas estou responsável e poder gerenciar meus alunos.
 
-## Daigrama de casos de uso
+## Diagrama de casos de uso
 
 [![Diagrama de casos de uso](project/img/use-case-diagram_v01.png)](project/img/use-case-diagram_v01.png)
 
