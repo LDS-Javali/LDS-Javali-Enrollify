@@ -1,109 +1,96 @@
-```
 @startuml
-left to right direction
-skinparam packageStyle rectangle
-skinparam shadowing false
+' Configurações de aparência
+skinparam actorStyle awesome
 skinparam usecase {
-BorderColor #555555
-BackgroundColor #F9F9F9
+    BackgroundColor #LightSkyBlue
+    BorderColor #181818
 }
+skinparam rectangle {
+    BackgroundColor #WhiteSmoke
+    BorderColor #181818
+}
+left to right direction
 
-title Sistema de Matrículas da Universidade — Casos de Uso
-
+' ===================================
+' ATORES E GENERALIZAÇÃO
+' ===================================
 actor "Usuário" as Usuario
-actor "Aluno" as Aluno
-actor "Professor" as Professor
-actor "Secretaria" as Secretaria
-actor "Sistema de Cobranças" as Billing
+actor Aluno
+actor Professor
+actor Secretaria
+actor "Sistema de Cobranças" as SistemaCobrancas <<system>>
 
+' Generalização: Todos os perfis são um tipo de Usuário
 Usuario <|-- Aluno
 Usuario <|-- Professor
 Usuario <|-- Secretaria
 
-rectangle "Sistema de Matrículas da Universidade" as Sistema {
+' ===================================
+' PACOTE DO SISTEMA
+' ===================================
+rectangle "Sistema de Matrículas" {
 
-(Efetuar Login) as UC_Login
+    ' --- CASOS DE USO ALUNO ---
+    usecase "Consultar disponibilidade\nde disciplinas" as UC_ConsultarVagas
+    usecase "Realizar matrícula" as UC_Realizar
+    usecase "Cancelar matrícula" as UC_Cancelar
+    usecase "Consultar minhas matrículas" as UC_MinhasMatriculas
+    usecase "Consultar Status final\nda Disciplina" as UC_StatusDisciplina
+    usecase "Consultar cobranças" as UC_ConsultarCobranca
 
-(Gerenciar currículo\ndo semestre) as UC_Curriculo
-(Manter disciplinas) as UC_Disc
-(Manter professores) as UC_Prof
-(Manter alunos) as UC_Alunos
+    ' --- CASOS DE USO PROFESSOR ---
+    usecase "Consultar alunos matriculados" as UC_AlunosMatriculados
+    usecase "Consultar turmas atribuídas" as UC_TurmasProfessor
 
-(Definir período de\nmatrículas) as UC_Periodo
-(Encerrar período de\nmatrículas) as UC_EncerrarPeriodo
-(Consolidar oferta de\ndisciplinas do semestre) as UC_Consolidar
-(Ativar disciplina\n>= 3 alunos) as UC_Ativar
-(Cancelar disciplina\n< 3 alunos) as UC_CancelarDisc
+    ' --- CASOS DE USO SECRETARIA ---
+    usecase "Gerenciar cadastros" as UC_GerenciarCadastros
+    usecase "Gerenciar o currículo do semestre" as UC_GerenciarCurriculo
+    usecase "Definir período de matrícula" as UC_DefinirPeriodo
+    usecase "Processar encerramento\ndo período de matrícula" as UC_ProcessarFim
+    usecase "Notificar Aluno sobre\nStatus da Disciplina" as UC_NotificarAluno
+    usecase "Alocar professor à turma" as UC_AlocarProfessor
 
-(Inscrever-se no semestre) as UC_Inscrever
-(Matricular-se em disciplina) as UC_Matricular
-(Cancelar matrícula) as UC_CancelarMat
-
-(Validar regras de\nmatrícula) as UC_Validar
-(Controlar vagas\nda disciplina) as UC_Vagas
-(Encerrar matrículas\nda disciplina) as UC_EncerrarMatDisc
-
-(Consultar alunos\npor disciplina) as UC_Consultar
-
-(Notificar Sistema de\nCobranças) as UC_Notificar
+    ' --- CASOS DE USO DE SUPORTE ---
+    usecase "Notificar Sistema de Cobranças" as UC_NotificarCobranca
+    usecase "Login no sistema" as UC_Login
 }
 
-' Associações principais
-Usuario --> UC_Login
+' ===================================
+' RELAÇÕES
+' ===================================
 
-Secretaria --> UC_Curriculo
-Secretaria --> UC_Periodo
-Secretaria --> UC_EncerrarPeriodo
+' --- Ação comum a todos os usuários ---
+Usuario -- UC_Login
 
-Aluno --> UC_Inscrever
-Aluno --> UC_Matricular
-Aluno --> UC_CancelarMat
+' --- Relações de Aluno ---
+Aluno -- UC_ConsultarVagas
+Aluno -- UC_Realizar
+Aluno -- UC_Cancelar
+Aluno -- UC_MinhasMatriculas
+Aluno -- UC_StatusDisciplina
+Aluno -- UC_ConsultarCobranca
 
-Professor --> UC_Consultar
+' --- Relações de Professor ---
+Professor -- UC_AlunosMatriculados
+Professor -- UC_TurmasProfessor
+Professor -- UC_StatusDisciplina
 
-' Sistema externo
-UC_Notificar --> Billing
+' --- Relações de Secretaria ---
+Secretaria -- UC_GerenciarCadastros
+Secretaria -- UC_GerenciarCurriculo
+Secretaria -- UC_DefinirPeriodo
+Secretaria -- UC_ProcessarFim
+Secretaria -- UC_AlocarProfessor
 
-' Decomposição / includes
-UC_Curriculo --> UC_Disc : <<include>>
-UC_Curriculo --> UC_Prof : <<include>>
-UC_Curriculo --> UC_Alunos : <<include>>
+' --- Inclusões obrigatórias ---
+UC_Realizar ..> UC_NotificarCobranca : <<include>>
 
-UC_EncerrarPeriodo --> UC_Consolidar : <<include>>
+' --- Extensões condicionais ---
+UC_ProcessarFim <.. UC_NotificarAluno : <<extend>>
 
-UC_Inscrever --> UC_Matricular : <<include>>
-UC_Inscrever --> UC_Notificar : <<include>>
+' --- Dependência entre secretaria e professor ---
+UC_AlocarProfessor ..> UC_TurmasProfessor : <<include>>
 
-UC_Matricular --> UC_Validar : <<include>>
-UC_Matricular --> UC_Vagas : <<include>>
-
-' Regras de negócio por extend
-UC_EncerrarMatDisc ..> UC_Matricular : <<extend>>\n[quando vagas = 60]
-UC_Ativar ..> UC_Consolidar : <<extend>>\n[inscritos >= 3]
-UC_CancelarDisc ..> UC_Consolidar : <<extend>>\n[inscritos < 3]
-
-' Observações / notas
-note bottom of UC_Login
-Pré-requisito para acessar os demais casos de uso.
-Todos os usuários possuem senha para validação de login.
-end note
-
-note right of UC_Matricular
-Aluno pode selecionar até:
-- 4 disciplinas obrigatórias (1ª opção)
-- 2 optativas (alternativas)
-A matrícula ocorre apenas dentro do período definido.
-end note
-
-note right of UC_Vagas
-Vagas por disciplina: 0..60
-Ao atingir 60, novas matrículas são encerradas.
-end note
-
-note right of UC_Consolidar
-Ao final do período de matrículas:
-- Disciplinas com >= 3 alunos: ativadas
-- Disciplinas com < 3 alunos: canceladas
-end note
+' --- Interação com sistema externo ---
+UC_NotificarCobranca -- SistemaCobrancas
 @enduml
-```
