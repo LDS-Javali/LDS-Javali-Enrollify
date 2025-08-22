@@ -114,8 +114,7 @@ O Enrollify, Sistema de Matrículas Universitárias é uma aplicação web desen
 
 ## Daigrama de casos de uso
 
-
-
+[![Diagrama de casos de uso](project/img/use-case-diagram_v01.png)](project/img/use-case-diagram_v01.png)
 
 ## Instruções de utilização
 Assim que a primeira versão do sistema estiver disponível, deverá complementar com as instruções de utilização. Descreva como instalar eventuais dependências e como executar a aplicação.
