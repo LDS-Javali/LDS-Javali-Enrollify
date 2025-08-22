@@ -1,6 +1,4 @@
 # Enrollify
-Escreva um ou dois parágrafo resumindo o objetivo do seu projeto.
-=======
 # <p align="center">Enrollify - Sistema de Matrículas Universitário</p>
 
 <p align="center">
