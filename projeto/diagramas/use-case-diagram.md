@@ -31,28 +31,32 @@ Usuario <|-- Secretaria
 rectangle "Sistema de Matrículas" {
 
     ' --- CASOS DE USO ALUNO ---
-    usecase "Consultar disponibilidade\nde disciplinas" as UC_ConsultarVagas
-    usecase "Realizar matrícula" as UC_Realizar
+    usecase "Matricular em disciplina" as UC_Matricular
     usecase "Cancelar matrícula" as UC_Cancelar
-    usecase "Consultar minhas matrículas" as UC_MinhasMatriculas
-    usecase "Consultar Status final\nda Disciplina" as UC_StatusDisciplina
-    usecase "Consultar cobranças" as UC_ConsultarCobranca
+    usecase "Matricular em disciplina\noptativa" as UC_Optativa
+    usecase "Matricular em disciplina\nobrigatória" as UC_Obrigatoria
 
     ' --- CASOS DE USO PROFESSOR ---
-    usecase "Consultar alunos matriculados" as UC_AlunosMatriculados
     usecase "Consultar turmas atribuídas" as UC_TurmasProfessor
 
     ' --- CASOS DE USO SECRETARIA ---
-    usecase "Gerenciar cadastros" as UC_GerenciarCadastros
-    usecase "Gerenciar o currículo do semestre" as UC_GerenciarCurriculo
-    usecase "Definir período de matrícula" as UC_DefinirPeriodo
-    usecase "Processar encerramento\ndo período de matrícula" as UC_ProcessarFim
-    usecase "Notificar Aluno sobre\nStatus da Disciplina" as UC_NotificarAluno
-    usecase "Alocar professor à turma" as UC_AlocarProfessor
+    usecase "Abrir período de matrícula" as UC_AbrirPeriodo
+    usecase "Encerrar período de matrícula" as UC_EncerrarPeriodo
+    usecase "Cadastrar usuário" as UC_CadastrarUsuario
+    usecase "Consultar usuário" as UC_ConsultarUsuario
+    usecase "Remover usuário" as UC_RemoverUsuario
+    usecase "Atualizar usuário" as UC_AtualizarUsuario
+    usecase "Definir currículo" as UC_DefinirCurriculo
+    usecase "Adicionar disciplina" as UC_Adicionar_Disciplina
+    usecase "Remover disciplina" as UC_Remover_Disciplina
+    usecase "Definir disciplina pré-requisito" as UC_PreRequisito
+    usecase "Definir disciplina co-requisito" as UC_CoRequisito
+
 
     ' --- CASOS DE USO DE SUPORTE ---
     usecase "Notificar Sistema de Cobranças" as UC_NotificarCobranca
     usecase "Login no sistema" as UC_Login
+    usecase "Recuperar senha" as UC_RecuperarSenha
 }
 
 ' ===================================
@@ -63,33 +67,35 @@ rectangle "Sistema de Matrículas" {
 Usuario -- UC_Login
 
 ' --- Relações de Aluno ---
-Aluno -- UC_ConsultarVagas
-Aluno -- UC_Realizar
-Aluno -- UC_Cancelar
-Aluno -- UC_MinhasMatriculas
-Aluno -- UC_StatusDisciplina
-Aluno -- UC_ConsultarCobranca
+Aluno -- UC_Matricular
+UC_Matricular ..> UC_Obrigatoria : <<include>>
+UC_Cancelar <.. UC_Matricular : <<extend>>
+UC_Optativa <.. UC_Matricular : <<extend>>
+UC_Matricular ..> UC_NotificarCobranca : <<include>>
+
 
 ' --- Relações de Professor ---
-Professor -- UC_AlunosMatriculados
 Professor -- UC_TurmasProfessor
-Professor -- UC_StatusDisciplina
 
-' --- Relações de Secretaria ---
-Secretaria -- UC_GerenciarCadastros
-Secretaria -- UC_GerenciarCurriculo
-Secretaria -- UC_DefinirPeriodo
-Secretaria -- UC_ProcessarFim
-Secretaria -- UC_AlocarProfessor
+' --- Relações da Secretaria ---
+Secretaria -- UC_AbrirPeriodo
+Secretaria -- UC_EncerrarPeriodo
+Secretaria -- UC_CadastrarUsuario
+Secretaria -- UC_ConsultarUsuario
+Secretaria -- UC_RemoverUsuario
+Secretaria -- UC_AtualizarUsuario
+Secretaria -- UC_DefinirCurriculo
 
-' --- Inclusões obrigatórias ---
-UC_Realizar ..> UC_NotificarCobranca : <<include>>
+' Relações de Currículo (CORRIGIDO)
+UC_DefinirCurriculo ..> UC_Adicionar_Disciplina : <<include>>
+UC_DefinirCurriculo ..> UC_Remover_Disciplina : <<include>>
+
+UC_PreRequisito <.. UC_Adicionar_Disciplina : <<extend>>
+UC_CoRequisito <.. UC_Adicionar_Disciplina : <<extend>>
+
 
 ' --- Extensões condicionais ---
-UC_ProcessarFim <.. UC_NotificarAluno : <<extend>>
-
-' --- Dependência entre secretaria e professor ---
-UC_AlocarProfessor ..> UC_TurmasProfessor : <<include>>
+UC_RecuperarSenha <.. UC_Login : <<extend>>
 
 ' --- Interação com sistema externo ---
 UC_NotificarCobranca -- SistemaCobrancas
