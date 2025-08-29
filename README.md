@@ -120,4 +120,42 @@ O Enrollify, Sistema de Matrículas Universitárias é uma aplicação web desen
 </p>
 
 ## Instruções de utilização
-Assim que a primeira versão do sistema estiver disponível, deverá complementar com as instruções de utilização. Descreva como instalar eventuais dependências e como executar a aplicação.
+
+### Pré-requisitos
+
+- Java JDK 17 ou superior instalado no ambiente (em dev containers, já está disponível).
+- Terminal Linux (Ubuntu 24.04.2 LTS).
+
+### Compilação
+
+Abra o terminal na raiz do projeto e execute:
+
+```bash
+cd implementacao/Enrollify/src
+javac *.java
+```
+
+Isso irá compilar todos os arquivos `.java` presentes na pasta `src`.
+
+### Execução
+
+Após a compilação, execute o programa principal:
+
+```bash
+java main
+```
+
+> O arquivo `main.java` contém o método `public static void main(String[] args)` para iniciar o sistema.
+
+### Execução de Testes
+
+Atualmente, não há testes automatizados implementados no diretório.
+
+---
+
+Caso queira abrir a documentação ou diagramas, utilize:
+
+```bash
+$BROWSER projeto/diagramas/imagens/use-case-diagram.png
+$BROWSER projeto/diagramas/imagens/diagrama.png
+```
