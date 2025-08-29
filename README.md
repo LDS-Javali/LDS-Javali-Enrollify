@@ -17,104 +17,101 @@ O Enrollify, Sistema de Matrículas Universitárias é uma aplicação web desen
 
 ## Histórias de Usuário
 
-### Login no sistema
-
- Como usuário,
- quero acessar o sistema com meu login e senha,
- para visualizar e gerenciar minhas informações de acordo com meu perfil (aluno, professor ou secretaria).
-
-### Realizar matrícula
-
- Como aluno,
- quero me matricular em até 4 disciplinas obrigatórias e 2 optativas,
- para montar minha grade de disciplinas no semestre.
-
-### Cancelar matrícula
-
- Como aluno,
- quero cancelar uma matrícula dentro do período permitido,
- para ajustar minha grade de disciplinas.
-
-### Consultar alunos matriculados 
-
- Como professor,
- quero visualizar a lista de alunos matriculados em minhas disciplinas,
- para saber quem compõe cada turma.
-
-### Gerenciar o currículo do semestre 
-
- Como funcionário da secretaria,
- quero criar, visualizar, atualizar e remover disciplinas da oferta de um semestre específico,
- para definir o currículo disponível aos alunos.
-
-### Gerenciar Cadastros
-
- Como funcionário da secretaria,
- quero cadastrar, atualizar e remover informações de cursos, disciplinas, alunos e professores,
- para manter os dados do sistema acadêmico sempre corretos e atualizados.
-
-### Consultar Cobranças
-
- Como aluno,
- quero consultar minhas cobranças referentes às disciplinas em que estou matriculado,
- para acompanhar meus débitos e manter meus pagamentos em dia com a universidade.
-
-### Processar encerramento do período de matrícula v 
-
- Como funcionário da secretaria,
- ao final do período de matrícula quero comandar o sistema para verificar todas as disciplinas,
- para o sistema cancelar automaticamente as disciplinas que têm menos de 3 alunos e confirmar as demais.
-
-### Consultar minhas matrículas 
-
- Como aluno,
- quero visualizar as disciplinas em que estou matriculado,
- para acompanhar minha grade e confirmar minha inscrição.
-
-### Consultar disponibilidade de disciplinas
-
- Como aluno,
- quero verificar a lista de disciplinas disponíveis e se ainda há vagas,
- para escolher em quais devo me matricular.
-
-### Definir período de matrícula 
-
- Como funcionário da secretaria,
- quero configurar datas de início e fim do período de matrícula,
- para que os alunos só possam se inscrever dentro do prazo definido.
-
-### Consultar Status final da Disciplina
-
- Como aluno,
- quero visualizar quais disciplinas foram confirmadas ou canceladas ao final do    	período de matrícula,
- para saber quais disciplinas poderei cursar no próximo semestre.
-
-### Notificar Sistema de Cobranças
-
- Como Sistema de Matrículas, 
- quero enviar os dados de uma matrícula confirmada, 
- para que o Sistema de Cobranças possa gerar a fatura para o aluno.
-
-### Notificar Aluno sobre Status da Disciplina
-
- Como Sistema, 
- quero notificar um aluno quando uma disciplina em que ele está inscrito for cancelada, 
- para que ele tenha ciência e possa ajustar sua grade curricular.
-
-### Alocar Professor à Turma
-
- Como funcionário da secretaria, 
- quero associar um professor a uma turma oferecida no semestre, 
- para definir o docente responsável e permitir que ele consulte seus alunos.
-
 ### Consultar Turmas Atribuídas
  Como professor,
  quero consultar as turmas que me foram atribuídas no semestre,
  para acompanhar em quais disciplinas estou responsável e poder gerenciar meus alunos.
 
+### Definir disciplina pré-requisito
+ Como funcionário da secretaria,
+ quero definir uma disciplina como pré-requisito de outra,
+ para assegurar que os alunos possuam o conhecimento necessário antes de cursar disciplinas mais avançadas.
+
+### Definir disciplina co-requisito
+ Como funcionário da secretaria,
+ quero definir uma disciplina como co-requisito de outra,
+ para garantir que os alunos se matriculem em disciplinas que precisam ser cursadas simultaneamente.
+ 
+### Cadastrar usuário
+ Como funcionário da secretaria,
+ quero cadastrar novos usuários no sistema,
+ para que eles possam ter acesso e utilizar suas funcionalidades de acordo com seus perfis.
+
+### Remover usuário
+ Como funcionário da secretaria,
+ quero remover o cadastro de um usuário,
+ para manter a base de dados do sistema atualizada com usuários ativos.
+
+### Atualizar usuário
+ Como funcionário da secretaria,
+ quero atualizar as informações cadastrais de um usuário,
+ para garantir que os dados de alunos e professores estejam sempre corretos e atualizados.
+
+### Consultar usuário
+ Como funcionário da secretaria,
+ quero consultar as informações de um usuário específico,
+ para poder verificar dados cadastrais, histórico e situação atual no sistema.
+
+### Definir currículo
+ Como funcionário da secretaria,
+ quero definir o currículo de um semestre para cada curso,
+ para que os alunos saibam quais disciplinas estão disponíveis para matrícula.
+
+### Abrir período de matrícula
+ Como funcionário da secretaria,
+ quero abrir o período de matrículas,
+ para permitir que os alunos possam acessar o sistema e se inscrever nas disciplinas do próximo semestre.
+
+### Encerrar período de matrícula
+ Como funcionário da secretaria,
+ quero encerrar o período de matrículas,
+ para consolidar as turmas, cancelar as disciplinas que não atingiram o número mínimo de alunos e processar as matrículas finalizadas.
+
+### Adicionar disciplina
+ Como funcionário da secretaria,
+ quero adicionar novas disciplinas ao catálogo da universidade,
+ para expandir a oferta de matérias disponíveis para os cursos.
+
+### Remover disciplina
+ Como funcionário da secretaria,
+ quero remover uma disciplina do catálogo,
+ para descontinuar matérias que não serão mais ofertadas pela universidade.
+
+### Matricular em disciplina
+ Como aluno,
+ quero me matricular em disciplinas durante o período de matrículas,
+ para poder cursar as matérias do próximo semestre e avançar no meu curso.
+
+### Matricular em disciplina obrigatória
+ Como aluno,
+ quero me matricular em até 4 disciplinas definidas como obrigatórias,
+ para cumprir os requisitos curriculares essenciais do meu curso.
+
+### Matricular em disciplina optativa
+ Como aluno,
+ quero me matricular em até 2 disciplinas optativas,
+ para complementar minha formação acadêmica e atender aos créditos necessários.
+ 
+### Login no sistema
+ Como usuário,
+ quero acessar o sistema com meu login e senha,
+ para visualizar e gerenciar minhas informações de acordo com meu perfil.
+ 
+### Recuperar senha
+ Como usuário,
+ quero solicitar a recuperação da minha senha caso a tenha esquecido,
+ para poder voltar a acessar o sistema de forma segura.
+
+### Notificar Sistema de Cobranças
+ Como Sistema de Matrículas, 
+ quero enviar os dados de uma matrícula confirmada, 
+ para que o Sistema de Cobranças possa gerar a fatura para o aluno.
+
 ## Diagrama de casos de uso
 
-[![Diagrama de casos de uso](projeto/diagramas/use-case-diagram.png)](projeto/diagramas/use-case-diagram.png)
+<p align="center">
+  <img src="projeto/diagramas/imagens/use-case-diagram.png" alt="Enrollify">
+</p>
 
 ## Instruções de utilização
 Assim que a primeira versão do sistema estiver disponível, deverá complementar com as instruções de utilização. Descreva como instalar eventuais dependências e como executar a aplicação.
