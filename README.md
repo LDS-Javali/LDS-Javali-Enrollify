@@ -157,5 +157,5 @@ Caso queira abrir a documentação ou diagramas, utilize:
 
 ```bash
 $BROWSER projeto/diagramas/imagens/use-case-diagram.png
-$BROWSER projeto/diagramas/imagens/diagrama
+$BROWSER projeto/diagramas/imagens/diagrama.png
 ```
