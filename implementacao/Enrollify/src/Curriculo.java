@@ -1,17 +1,33 @@
+import java.util.ArrayList;
 import java.util.List;
 
-public class Curriculo {
-    
+public class Curriculo implements java.io.Serializable {
+    private static long contadorId = 0;
     private Long idCurriculo;
-    private List<Disciplina> disciplinas;
     private Curso curso;
-    private Semestre semestre;
+    private List<Disciplina> disciplinas;
+
+    public Curriculo(Curso curso) {
+        this.idCurriculo = ++contadorId;
+        this.curso = curso;
+        this.disciplinas = new ArrayList<>();
+    }
 
     public void adicionarDisciplina(Disciplina disciplina) {
-        System.out.println("Método adicionarDisciplina() ao currículo chamado.");
+        if (!this.disciplinas.contains(disciplina)) {
+            this.disciplinas.add(disciplina);
+        }
     }
 
     public void removerDisciplina(Disciplina disciplina) {
-        System.out.println("Método removerDisciplina() do currículo chamado.");
+        this.disciplinas.remove(disciplina);
+    }
+
+    public List<Disciplina> getDisciplinas() {
+        return disciplinas;
+    }
+
+    public Curso getCurso() {
+        return curso;
     }
 }
