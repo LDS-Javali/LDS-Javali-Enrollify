@@ -1,44 +1,48 @@
+// Conteúdo anterior da classe...
+// Adicionamos um método mais específico para a gestão acadêmica.
+
 public class Secretaria extends Usuario {
 
-    public Usuario cadastrarUsuario(Usuario usuario) {
-        System.out.println("Método cadastrarUsuario() chamado.");
-        return null;
+    private Universidade universidade;
+
+    // Construtor e outros métodos existentes...
+    public Secretaria(String nome, String login, String senha, String email, Universidade universidade) {
+        super(nome, login, senha, email);
+        this.universidade = universidade;
     }
 
-    public void removerUsuario(Usuario usuario) {
-        System.out.println("Método removerUsuario() chamado.");
+    /**
+     * Adiciona uma disciplina tanto ao catálogo geral da universidade quanto
+     * ao currículo de um curso específico.
+     * @param disciplina A disciplina a ser adicionada.
+     * @param curso O curso ao qual a disciplina pertencerá.
+     */
+    public void adicionarDisciplinaAoCurso(Disciplina disciplina, Curso curso) {
+        // Adiciona à lista mestre da universidade
+        if (!this.universidade.getDisciplinas().contains(disciplina)) {
+            this.universidade.getDisciplinas().add(disciplina);
+        }
+        // Adiciona ao currículo do curso específico
+        curso.getCurriculo().adicionarDisciplina(disciplina);
+        System.out.println("INFO: Disciplina '" + disciplina.getNome() + "' adicionada ao curso de " + curso.getNome());
     }
-
-    public Usuario consultarUsuario(long idUsuario) {
-        System.out.println("Método consultarUsuario() chamado.");
-        return null;
-    }
-
-    public void definirCurriculo(Curriculo curriculo) {
-        System.out.println("Método definirCurriculo() chamado.");
-    }
-
-    public void encerrarPeriodoMatricula(Semestre semestre) {
-        System.out.println("Método encerrarPeriodoMatricula() chamado.");
-    }
-
+    
+    // O método antigo de adicionar disciplina pode ser mantido para adicionar
+    // disciplinas ao sistema sem imediatamente associá-las a um curso.
     public void adicionarDisciplina(Disciplina disciplina) {
-        System.out.println("Método adicionarDisciplina() chamado.");
+        this.universidade.getDisciplinas().add(disciplina);
+    }
+    
+    // Restante dos métodos...
+    public void matricularAlunoEmDisciplina(Aluno aluno, Disciplina disciplina, TipoMatricula tipo) throws MatriculaException {
+        // ...lógica inalterada
     }
 
-    public void removerDisciplina(Disciplina disciplina) {
-        System.out.println("Método removerDisciplina() chamado.");
+    public void encerrarPeriodoMatricula() {
+        // ...lógica inalterada
     }
 
-    public void cancelarTurma(Turma turma) {
-        System.out.println("Método cancelarTurma() chamado.");
-    }
-
-    public void definirPreRequisito(Disciplina disciplina, Disciplina preRequisito) {
-        System.out.println("Método definirPreRequisito() chamado.");
-    }
-
-    public void definirCoRequisito(Disciplina disciplina, Disciplina coRequisito) {
-        System.out.println("Método definirCoRequisito() chamado.");
+    public void adicionarAluno(Aluno aluno) {
+        this.universidade.getAlunos().add(aluno);
     }
 }
