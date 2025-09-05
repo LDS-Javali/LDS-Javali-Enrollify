@@ -1,19 +1,30 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class Professor extends Usuario {
-    private List<Disciplina> disciplinasAtribuidas;
+public class Professor extends Usuario implements java.io.Serializable {
+    private List<Turma> turmasAtribuidas;
 
     public Professor(String nome, String login, String senha, String email) {
         super(nome, login, senha, email);
-        this.disciplinasAtribuidas = new ArrayList<>();
+        this.turmasAtribuidas = new ArrayList<>();
     }
 
-    public void atribuirDisciplina(Disciplina disciplina) {
-        this.disciplinasAtribuidas.add(disciplina);
+    public void adicionarTurma(Turma turma) {
+        if (!turmasAtribuidas.contains(turma)) {
+            turmasAtribuidas.add(turma);
+        }
     }
 
-    public List<Disciplina> consultarDisciplinasAtribuidas() {
-        return this.disciplinasAtribuidas;
+    public void removerTurma(Turma turma) {
+        turmasAtribuidas.remove(turma);
+    }
+
+    public List<Turma> consultarTurmasAtribuidas() {
+        return new ArrayList<>(turmasAtribuidas);
+    }
+
+    @Override
+    public String toString() {
+        return "Professor: " + nome + " (" + login + ")";
     }
 }

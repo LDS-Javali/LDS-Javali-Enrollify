@@ -1,0 +1,11 @@
+# Arquivos compilados
+*.class
+build/
+
+# Arquivos de IDE
+.idea/
+*.iml
+
+# Arquivos do sistema
+.DS_Store
+Thumbs.db

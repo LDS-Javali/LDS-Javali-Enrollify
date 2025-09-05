@@ -14,6 +14,7 @@ public class Disciplina implements java.io.Serializable {
     private List<Matricula> matriculas;
     private List<Disciplina> preRequisitos;
     private List<Disciplina> coRequisitos;
+    private List<Turma> turmas;
 
     public Disciplina(String nome, int creditos) {
         this.idDisciplina = ++contadorId;
@@ -23,8 +24,9 @@ public class Disciplina implements java.io.Serializable {
         this.matriculas = new ArrayList<>();
         this.preRequisitos = new ArrayList<>();
         this.coRequisitos = new ArrayList<>();
+        this.turmas = new ArrayList<>();
     }
-    
+
     public void adicionarMatricula(Matricula matricula) {
         this.matriculas.add(matricula);
     }
@@ -32,22 +34,39 @@ public class Disciplina implements java.io.Serializable {
     public void adicionarPreRequisito(Disciplina disciplina) {
         this.preRequisitos.add(disciplina);
     }
-    
+
+    public void adicionarCoRequisito(Disciplina disciplina) {
+        this.coRequisitos.add(disciplina);
+    }
+
+    public void removerPreRequisito(Disciplina disciplina) {
+        this.preRequisitos.remove(disciplina);
+    }
+
+    public void removerCoRequisito(Disciplina disciplina) {
+        this.coRequisitos.remove(disciplina);
+    }
+
     public int getNumeroMatriculados() {
         return this.matriculas.size();
     }
 
-    // Getters e Setters
     public String getNome() { return nome; }
     public Professor getProfessor() { return professor; }
     public void setProfessor(Professor professor) {
         this.professor = professor;
-        professor.atribuirDisciplina(this);
+        if (professor != null) {
+            professor.adicionarTurma(new Turma(this));
+        }
     }
     public EstadoDisciplina getStatus() { return status; }
     public void setStatus(EstadoDisciplina status) { this.status = status; }
     public List<Disciplina> getPreRequisitos() { return preRequisitos; }
+    public List<Disciplina> getCoRequisitos() { return coRequisitos; }
     public List<Matricula> getMatriculas() { return matriculas; }
+    public List<Turma> getTurmas() { return turmas; }
+    public int getCreditos() { return creditos; }
+    public Long getIdDisciplina() { return idDisciplina; }
 
     @Override
     public String toString() {

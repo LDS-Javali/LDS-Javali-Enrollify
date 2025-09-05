@@ -1,7 +1,6 @@
 public abstract class Usuario implements java.io.Serializable {
-    
-    private static final long serialVersionUID = 1L;
-    protected static long contadorId = 0;
+    private static long contadorId = 0;
+
     protected Long idUsuario;
     protected String nome;
     protected String login;
@@ -21,19 +20,20 @@ public abstract class Usuario implements java.io.Serializable {
     }
 
     public void recuperarSenha() {
-        System.out.println("Instruções de recuperação de senha enviadas para " + this.email);
+        System.out.println("Solicitação de recuperação enviada para: " + email);
     }
 
-    public Long getIdUsuario() {
-        return idUsuario;
-    }
-
-    public String getNome() {
-        return nome;
-    }
+    public Long getIdUsuario() { return idUsuario; }
+    public String getNome() { return nome; }
+    public void setNome(String nome) { this.nome = nome; }
+    public String getLogin() { return login; }
+    public void setLogin(String login) { this.login = login; }
+    public String getEmail() { return email; }
+    public void setEmail(String email) { this.email = email; }
+    public void setSenha(String senha) { this.senha = senha; }
 
     @Override
     public String toString() {
-        return "ID: " + idUsuario + ", Nome: " + nome;
+        return nome + " (" + login + ")";
     }
 }

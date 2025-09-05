@@ -1,11 +1,7 @@
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Representa a grade curricular de um Curso, contendo o conjunto de
- * disciplinas que o compõem.
- */
-public class Curriculo implements java.io.Serializable{
+public class Curriculo implements java.io.Serializable {
     private static long contadorId = 0;
     private Long idCurriculo;
     private Curso curso;

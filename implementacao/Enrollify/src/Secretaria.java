@@ -1,13 +1,9 @@
-// Conteúdo anterior da classe...
-// Adicionamos um método mais específico para a gestão acadêmica.
-
+import java.util.ArrayList;
 import java.util.List;
 
-public class Secretaria extends Usuario {
-
+public class Secretaria extends Usuario implements java.io.Serializable {
     private Universidade universidade;
 
-    // Construtor e outros métodos existentes...
     public Secretaria(String nome, String login, String senha, String email, Universidade universidade) {
         super(nome, login, senha, email);
         this.universidade = universidade;
@@ -36,58 +32,119 @@ public class Secretaria extends Usuario {
         return novaDisciplina;
     }
 
-    /**
-     * Adiciona uma disciplina tanto ao catálogo geral da universidade quanto
-     * ao currículo de um curso específico.
-     * @param disciplina A disciplina a ser adicionada.
-     * @param curso O curso ao qual a disciplina pertencerá.
-     */
-    public void adicionarDisciplinaAoCurso(Disciplina disciplina, Curso curso) {
-        curso.getCurriculo().adicionarDisciplina(disciplina);
-        System.out.println(">>> Disciplina '" + disciplina.getNome() + "' adicionada com sucesso ao curso de " + curso.getNome());
+    public void cadastrarUsuario(Usuario usuario) {
+        if (usuario instanceof Aluno) {
+            universidade.getAlunos().add((Aluno) usuario);
+        } else if (usuario instanceof Professor) {
+            universidade.getProfessores().add((Professor) usuario);
+        } else if (usuario instanceof Secretaria) {
+            universidade.getSecretarios().add((Secretaria) usuario);
+        }
+        System.out.println("Usuário cadastrado!");
     }
-    
 
-    public void matricularAlunoEmDisciplina(Aluno aluno, Disciplina disciplina, TipoMatricula tipo) throws MatriculaException {
-        // Regra 1: Verificar se a disciplina está lotada
-        if (disciplina.getNumeroMatriculados() >= Disciplina.MAX_ALUNOS) {
-            throw new MatriculaException("Não foi possível matricular: Disciplina '" + disciplina.getNome() + "' está lotada.");
+    public void removerUsuario(Usuario usuario) {
+        if (usuario instanceof Aluno) {
+            universidade.getAlunos().remove(usuario);
+        } else if (usuario instanceof Professor) {
+            universidade.getProfessores().remove(usuario);
+        } else if (usuario instanceof Secretaria) {
+            universidade.getSecretarios().remove(usuario);
         }
+        System.out.println("Usuário removido!");
+    }
 
-        // Regra 2: Verificar se o aluno cumpre os pré-requisitos
-        List<Disciplina> aprovadas = aluno.getDisciplinasAprovadas();
-        for (Disciplina preRequisito : disciplina.getPreRequisitos()) {
-            if (!aprovadas.contains(preRequisito)) {
-                throw new MatriculaException("Não foi possível matricular: Aluno não cumpriu o pré-requisito '" + preRequisito.getNome() + "'.");
-            }
+    public void atualizarUsuario(Usuario usuario) {
+        System.out.println("Usuário atualizado!");
+    }
+
+    public Usuario consultarUsuario(String login) {
+        for (Aluno aluno : universidade.getAlunos()) {
+            if (aluno.getLogin().equals(login)) return aluno;
         }
+        for (Professor professor : universidade.getProfessores()) {
+            if (professor.getLogin().equals(login)) return professor;
+        }
+        for (Secretaria secretaria : universidade.getSecretarios()) {
+            if (secretaria.getLogin().equals(login)) return secretaria;
+        }
+        return null;
+    }
 
-        // Se todas as regras passaram, efetiva a matrícula
-        Matricula novaMatricula = new Matricula(aluno, disciplina, tipo);
-        aluno.adicionarMatricula(novaMatricula);
-        disciplina.adicionarMatricula(novaMatricula);
+    public void adicionarDisciplina(Disciplina disciplina) {
+        universidade.getDisciplinas().add(disciplina);
+        System.out.println("Disciplina adicionada!");
+    }
 
-        System.out.println("SUCESSO: Aluno " + aluno.getNome() + " matriculado em " + disciplina.getNome() + ".");
+    public void removerDisciplina(Disciplina disciplina) {
+        universidade.getDisciplinas().remove(disciplina);
+        System.out.println("Disciplina removida!");
+    }
+
+    public void definirPreRequisito(Disciplina disciplina, Disciplina preRequisito) {
+        disciplina.adicionarPreRequisito(preRequisito);
+        System.out.println("Pré-requisito definido!");
+    }
+
+    public void definirCoRequisito(Disciplina disciplina, Disciplina coRequisito) {
+        disciplina.adicionarCoRequisito(coRequisito);
+        System.out.println("Co-requisito definido!");
+    }
+
+    public void definirCurriculo(Curso curso, List<Disciplina> disciplinas) {
+        for (Disciplina disciplina : disciplinas) {
+            curso.getCurriculo().adicionarDisciplina(disciplina);
+        }
+        System.out.println("Currículo definido!");
+    }
+
+    public void abrirPeriodoMatricula() {
+        System.out.println("Período de matrícula aberto!");
     }
 
     public void encerrarPeriodoMatricula() {
-        System.out.println("\n--- ENCERRANDO PERÍODO DE MATRÍCULA ---");
         for (Disciplina disciplina : universidade.getDisciplinas()) {
-            if (disciplina.getStatus() == EstadoDisciplina.PLANEJADA) {
-                if (disciplina.getNumeroMatriculados() < Disciplina.MIN_ALUNOS) {
-                    disciplina.setStatus(EstadoDisciplina.CANCELADA);
-                    System.out.println("Disciplina '" + disciplina.getNome() + "' CANCELADA por falta de alunos (" + disciplina.getNumeroMatriculados() + ").");
-                } else {
-                    disciplina.setStatus(EstadoDisciplina.ATIVA);
-                    System.out.println("Disciplina '" + disciplina.getNome() + "' ATIVADA com " + disciplina.getNumeroMatriculados() + " alunos.");
-                }
+            if (disciplina.getNumeroMatriculados() < Disciplina.MIN_ALUNOS) {
+                disciplina.setStatus(EstadoDisciplina.CANCELADA);
+                System.out.println("Disciplina " + disciplina.getNome() + " cancelada por falta de alunos.");
             }
         }
-        System.out.println("--- PERÍODO ENCERRADO ---\n");
+        System.out.println("Período de matrícula encerrado!");
     }
 
-    public void adicionarAluno(Aluno aluno) {
-        this.universidade.getAlunos().add(aluno);
+    public void matricularAlunoEmDisciplina(Aluno aluno, Disciplina disciplina, TipoMatricula tipo) throws MatriculaException {
+        if (!universidade.getDisciplinas().contains(disciplina)) {
+            throw new MatriculaException("Disciplina não encontrada!");
+        }
+
+        for (Disciplina preReq : disciplina.getPreRequisitos()) {
+            boolean temPreRequisito = false;
+            for (Matricula matricula : aluno.getHistoricoDeMatriculas()) {
+                if (matricula.getDisciplina().equals(preReq) &&
+                    (matricula.getStatus().equals("APROVADO") || matricula.getStatus().equals("CURSANDO"))) {
+                    temPreRequisito = true;
+                    break;
+                }
+            }
+            if (!temPreRequisito) {
+                throw new MatriculaException("Pré-requisito não atendido: " + preReq.getNome());
+            }
+        }
+
+        aluno.matricularEmDisciplina(disciplina, tipo);
+        notificarSistemaCobrancas(aluno, disciplina);
     }
-    
+
+    private void notificarSistemaCobrancas(Aluno aluno, Disciplina disciplina) {
+        System.out.println(">>> NOTIFICAÇÃO SISTEMA DE COBRANÇAS <<<");
+        System.out.println("Aluno: " + aluno.getNome() + " (" + aluno.getMatricula() + ")");
+        System.out.println("Disciplina: " + disciplina.getNome());
+        System.out.println("Valor: R$ " + (disciplina.getCreditos() * 100));
+        System.out.println("=========================================");
+    }
+
+    @Override
+    public String toString() {
+        return "Secretaria: " + nome + " (" + login + ")";
+    }
 }
