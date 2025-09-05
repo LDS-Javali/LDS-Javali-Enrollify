@@ -45,6 +45,8 @@ public class Main {
                 exibirMenuSecretaria();
             } else if (usuarioLogado instanceof Aluno) {
                 exibirMenuAluno();
+            } else if (usuarioLogado instanceof Professor) {
+                exibirMenuAluno();
             }
         }
     }
@@ -96,6 +98,14 @@ public class Main {
             if (a.fazerLogin(login, senha)) {
                 usuarioLogado = a;
                 System.out.println(">>> Login como Aluno bem-sucedido! Bem-vindo(a) " + a.getNome() + ".");
+                return;
+            }
+        }
+
+        for (Professor p : universidade.getProfessores()) {
+            if (p.fazerLogin(login, senha)) {
+                usuarioLogado = p;
+                System.out.println(">>> Login como Professor bem-sucedido! Bem-vindo(a) " + p.getNome() + ".");
                 return;
             }
         }

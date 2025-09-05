@@ -84,11 +84,14 @@ public class popular_dados {
         Professor prof2 = new Professor("Dra. Maria Santos", "maria.santos", "123456", "maria@uni.com");
         Professor prof3 = new Professor("Dr. Pedro Costa", "pedro.costa", "123456", "pedro@uni.com");
         Professor prof4 = new Professor("Dra. Ana Oliveira", "ana.oliveira", "123456", "ana@uni.com");
+        Professor prof6 = new Professor("Dr. João Pedro", "joao.pedro", "123456", "joao.pedro@uni.com");
 
         universidade.getProfessores().add(prof1);
         universidade.getProfessores().add(prof2);
         universidade.getProfessores().add(prof3);
         universidade.getProfessores().add(prof4);
+        universidade.getProfessores().add(prof6);
+
         System.out.println("✓ Professores criados");
 
         progI.setProfessor(prof1);
@@ -106,12 +109,15 @@ public class popular_dados {
         Aluno aluno3 = new Aluno("Roberto Souza", "roberto.souza", "123456", "roberto@uni.com", "2023003", cursoEng);
         Aluno aluno4 = new Aluno("Juliana Costa", "juliana.costa", "123456", "juliana@uni.com", "2023004", cursoAdm);
         Aluno aluno5 = new Aluno("Lucas Pereira", "lucas.pereira", "123456", "lucas@uni.com", "2023005", cursoAdm);
+        Aluno aluno6 = new Aluno("Amanda Bueno", "amanda.bueno", "123", "amanda.bueno@uni.com", "2023006", cursoEng);
 
         universidade.getAlunos().add(aluno1);
         universidade.getAlunos().add(aluno2);
         universidade.getAlunos().add(aluno3);
         universidade.getAlunos().add(aluno4);
         universidade.getAlunos().add(aluno5);
+        universidade.getAlunos().add(aluno6);
+
         System.out.println("✓ Alunos criados");
 
         Matricula mat1 = new Matricula(aluno1, calcI, TipoMatricula.OBRIGATORIA);
@@ -144,9 +150,9 @@ public class popular_dados {
         System.out.println("Disciplinas: " + universidade.getDisciplinas().size());
         System.out.println("Professores: " + universidade.getProfessores().size());
         System.out.println("Alunos: " + universidade.getAlunos().size());
-        System.out.println("\nCredenciais de teste:");
-        System.out.println("Secretaria: admin/admin");
-        System.out.println("Alunos: carlos.eduardo/123456, fernanda.lima/123456, roberto.souza/123456");
-        System.out.println("Professores: joao.silva/123456, maria.santos/123456, pedro.costa/123456, ana.oliveira/123456");
+        // System.out.println("\nCredenciais de teste:");
+        // System.out.println("Secretaria: admin/admin");
+        // System.out.println("Alunos: carlos.eduardo/123456, fernanda.lima/123456, roberto.souza/123456");
+        // System.out.println("Professores: joao.silva/123456, maria.santos/123456, pedro.costa/123456, ana.oliveira/123456");
     }
 }
